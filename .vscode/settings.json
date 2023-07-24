@@ -1,0 +1,86 @@
+{
+  // General
+  "python.defaultInterpreterPath": "${workspaceFolder}\\venv\\Scripts\\python.exe",
+  "python.analysis.completeFunctionParens": true,
+  "python.analysis.autoSearchPaths": true,
+  "python.analysis.autoImportCompletions": true,
+  "python.autoComplete.addBrackets": true,
+  "python.autoComplete.extraPaths": [
+    "${workspaceFolder}\\venv\\Lib\\site-packages"
+  ],
+  "python.envFile": ".env",
+  "python.disableInstallationCheck": true,
+  // Terminal
+  "python.terminal.launchArgs": ["-B"],
+  "python.terminal.activateEnvironment": true,
+  "python.terminal.activateEnvInCurrentTerminal": true,
+  // Linting
+  "python.linting.enabled": true,
+  "python.linting.lintOnSave": true,
+  "python.linting.maxNumberOfProblems": 100,
+  "python.linting.ignorePatterns": [".vscode/*.py", "**/site-packages/**/*.py"],
+  // Linting - Flake8
+  "python.linting.flake8Path": "${workspaceFolder}\\venv\\Scripts\\flake8.exe",
+  "python.linting.flake8Enabled": true,
+  "python.linting.flake8CategorySeverity.E": "Error",
+  "python.linting.flake8CategorySeverity.F": "Error",
+  "python.linting.flake8CategorySeverity.W": "Warning",
+  "python.linting.flake8Args": [
+    "--max-line-length=99",
+    "--ignore=E501,W503,E266,E402"
+  ],
+  // Linting - Mypy - Static Typing
+  "python.linting.mypyPath": "${workspaceFolder}\\venv\\Scripts\\mypy.exe",
+  "python.linting.mypyEnabled": true,
+  "python.linting.mypyCategorySeverity.error": "Error",
+  "python.linting.mypyCategorySeverity.note": "Information",
+  "python.linting.mypyArgs": [
+    "--follow-imports=silent",
+    "--ignore-missing-imports",
+    "--show-column-numbers",
+    "--disallow-untyped-defs",
+    "--disallow-untyped-calls",
+    "--check-untyped-defs",
+    "--disallow-incomplete-defs"
+  ],
+  // Formatting
+  "python.formatting.provider": "black",
+  "python.formatting.blackPath": "${workspaceFolder}\\venv\\Scripts\\black.exe",
+  "python.formatting.blackArgs": ["--line-length=99"],
+  // Sort - path should have the ${workspaceFolder} to work
+  "python.sortImports.path": "${workspaceFolder}\\venv\\Scripts\\isort.exe",
+  "python.sortImports.args": [
+    "--line-length=99",
+    "--profile",
+    "black",
+    "--only-sections",
+    "--star-first",
+    "--case-sensitive",
+    "--use-parentheses",
+    "--trailing-comma",
+    "--extend-skip-glob=test*"
+  ],
+  // Test
+  "python.testing.pytestEnabled": true,
+  "python.testing.pytestPath": "${workspaceFolder}\\venv\\Scripts\\pytest.exe",
+  "python.testing.unittestEnabled": false,
+  "python.testing.nosetestsEnabled": false,
+  "python.testing.autoTestDiscoverOnSaveEnabled": false,
+  "python.testing.pytestArgs": ["tests"],
+  // Editor
+  "editor.formatOnSave": true,
+  "[python]": {
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": false
+    },
+    "editor.formatOnPaste": false,
+    "editor.formatOnSaveMode": "file",
+    "editor.dragAndDrop": false,
+    "editor.cursorStyle": "line",
+    "editor.rulers": [99]
+  },
+  "workbench.colorCustomizations": {
+    "editorRuler.foreground": "#ff4081"
+  },
+  "python.analysis.extraPaths": ["${workspaceFolder}\\venv\\Lib\\site-packages"]
+}

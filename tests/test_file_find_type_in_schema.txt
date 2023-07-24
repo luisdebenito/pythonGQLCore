@@ -1,0 +1,1595 @@
+scalar CostingDate
+scalar CostingDateTime
+scalar CategoryScalar
+scalar CategoryScalarEquipment
+
+type Query {
+    """COSTING SERVICE""" costingVersion: CostingVersion
+    """COSTING SERVICE""" costingChangelog(projectId:String!, crudOptions: CrudOptionsInput):[CostingHistory]
+    """COSTING SERVICE""" costingChangelogByParentId(projectId:String!, actualReportId: String!, crudOptions: CrudOptionsInput):[CostingHistory]
+    # // --------------------------------------------------- COSTS --------------------------------------------------- //
+    # // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 1) COST CODES
+    """COSTING SERVICE""" costCode(projectId:String!, code:String!, crudOptions: CrudOptionsInput): CostCode
+    """COSTING SERVICE""" costCodes(projectId:String!, crudOptions: CrudOptionsInput):[CostCode]
+    # // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 2) COST TYPES
+    """COSTING SERVICE""" costType(projectId:String!, code:String!, crudOptions: CrudOptionsInput): CostType
+    """COSTING SERVICE""" costTypes(projectId:String!, crudOptions: CrudOptionsInput):[CostType]
+    # // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 3) CURRENCIES
+    """COSTING SERVICE""" currencies(projectId:String!, crudOptions: CrudOptionsInput):[Currency]
+    """COSTING SERVICE""" currency(projectId:String!, currencyCode:String!, crudOptions: CrudOptionsInput): Currency
+    # // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 4) RATES
+    """COSTING SERVICE""" rates(projectId: String!, crudOptions: CrudOptionsInput):[ResourceClassRate]
+    # // -------------------------------------------------- RESOURCES ----------------------------------------------- //
+    # // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 6) RESOURCE
+    """COSTING SERVICE""" resourceCategories(projectId: String!, crudOptions: CrudOptionsInput): [Category]
+
+    """COSTING SERVICE""" resources(projectId: String!, crudOptions: CrudOptionsInput): [Resource]
+    """COSTING SERVICE""" resourceById(id: String!, projectId: String!, crudOptions: CrudOptionsInput): Resource
+    """COSTING SERVICE""" resourcesByCategories(categories: [String!]!, projectId: String!, crudOptions: CrudOptionsInput): [Resource]
+    # // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 7) RESOURCE CLASSES
+    """COSTING SERVICE""" resourceClassById(id: String!, projectId: String!, crudOptions: CrudOptionsInput): ResourceClass
+    """COSTING SERVICE""" resourceClasses(projectId: String!, crudOptions: CrudOptionsInput): [ResourceClass]
+    """COSTING_SERVICE""" resourceClassesByCompany(projectId: String!, onlyValid: Boolean, crudOptions: CrudOptionsInput): [ResourceClassesByCompany]
+    """COSTING SERVICE""" resourceClassesByCategories(projectId: String!, categories: [String!], crudOptions: CrudOptionsInput): [ResourceClass]
+    # // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 9) EQUIPMENT
+    """COSTING SERVICE""" equipmentResource(id: String!, projectId: String!, crudOptions: CrudOptionsInput): EquipmentResource
+    """COSTING SERVICE""" equipmentResources(projectId: String!, crudOptions: CrudOptionsInput): [EquipmentResource]
+    # // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 10) LEASED EQUIPMENT
+    """COSTING SERVICE""" leasedEquipment(id: String!, projectId: String!, crudOptions: CrudOptionsInput): EquipmentResource
+    """COSTING SERVICE""" leasedEquipments(projectId: String!, crudOptions: CrudOptionsInput): [EquipmentResource]
+    # // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 10) LEASED EQUIPMENT
+    """COSTING SERVICE""" externalEquipment(id: String!, projectId: String!, crudOptions: CrudOptionsInput): EquipmentResource
+    """COSTING SERVICE""" externalEquipments(projectId: String!, crudOptions: CrudOptionsInput): [EquipmentResource]
+    # // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 11) OWNED EQUIPMENT
+    """COSTING SERVICE""" ownedEquipment(id: String!, projectId: String!, crudOptions: CrudOptionsInput): EquipmentResource
+    """COSTING SERVICE""" ownedEquipments(projectId: String!, crudOptions: CrudOptionsInput): [EquipmentResource]
+    # // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 12) LABOR
+    """COSTING SERVICE""" laborResource(id: String!, projectId: String!, crudOptions: CrudOptionsInput): LaborResource
+    """COSTING SERVICE""" laborResources(projectId: String!, crudOptions: CrudOptionsInput): [LaborResource]
+    # // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 13) EXTERNAL LABOR
+    """COSTING SERVICE""" externalLabor(id: String!, projectId: String!, crudOptions: CrudOptionsInput): LaborResource
+    """COSTING SERVICE""" externalLabors(projectId: String!, crudOptions: CrudOptionsInput): [LaborResource]
+    # // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 14) INTERNAL LABOR
+    """COSTING SERVICE""" internalLabor(id: String!, projectId: String!, crudOptions: CrudOptionsInput): LaborResource
+    """COSTING SERVICE""" internalLabors(projectId: String!, crudOptions: CrudOptionsInput): [LaborResource]
+    # // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 15) SUBCONTRACTOR
+    """COSTING SERVICE""" subcontractor(id: String!, projectId: String!, crudOptions: CrudOptionsInput): Subcontractor
+    """COSTING SERVICE""" subcontractors(projectId: String!, crudOptions: CrudOptionsInput): [Subcontractor]
+    # // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 16) WETHIRE
+    """COSTING SERVICE""" wetHire(id: String!, projectId: String!, crudOptions: CrudOptionsInput): Resource
+    """COSTING SERVICE""" wetHires(projectId: String!, crudOptions: CrudOptionsInput): [Resource]
+    # // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 17) FUEL AND OIL
+    """COSTING SERVICE""" fuelAndOil(id: String!, projectId: String!, crudOptions: CrudOptionsInput): Resource
+    """COSTING SERVICE""" fuelAndOils(projectId: String!, crudOptions: CrudOptionsInput): [Resource]
+    # // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 18) JOB POSITIONS
+    """COSTING SERVICE""" jobPosition(id: String!, projectId: String!, crudOptions: CrudOptionsInput): JobPosition
+    """COSTING SERVICE""" jobPositions(projectId: String!, crudOptions: CrudOptionsInput): [JobPosition]
+    # // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 19) MATERIALS
+    """COSTING SERVICE""" material(id: String!, projectId: String!, crudOptions: CrudOptionsInput): MaterialResource
+    """COSTING SERVICE""" materials(projectId: String!, crudOptions: CrudOptionsInput): [MaterialResource]
+    # // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 20) WORKFORCE GROUPS
+    """COSTING SERVICE""" workforceGroups(projectId: String!, crudOptions: CrudOptionsInput): [WorkforceGroup]
+    # // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 21) SUBCONTRACTOR CREW
+    """COSTING SERVICE""" subcontractorCrew(id: String!, projectId: String!, crudOptions: CrudOptionsInput): CrewResource
+    """COSTING SERVICE""" subcontractorCrews(projectId: String!, crudOptions: CrudOptionsInput): [CrewResource]
+
+    # // ------------------------------------- TIMESHEET ----------------------------------- //
+    # // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 22) INDIVIDUAL/WEEKLY/WORKCREW
+    # ON HOLD: NOT USED
+    """COSTING SERVICE""" individualTimesheet(id: String!, projectId: String!, crudOptions: CrudOptionsInput): IndividualTimesheet
+    """COSTING SERVICE""" individualTimesheets(projectId: String!, crudOptions: CrudOptionsInput): [IndividualTimesheet]
+    """COSTING SERVICE""" weeklyTimesheet(id: String!, projectId: String!, crudOptions: CrudOptionsInput): WeeklyTimesheet
+    """COSTING SERVICE""" weeklyTimesheets(projectId: String!, crudOptions: CrudOptionsInput): [WeeklyTimesheet]
+    """COSTING SERVICE""" workCrewTimesheet(id: String!, projectId: String!, crudOptions: CrudOptionsInput): WorkCrewTimesheet
+    """COSTING SERVICE""" workCrewTimesheets(projectId: String!, crudOptions: CrudOptionsInput): [WorkCrewTimesheet]
+
+    # // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 23) SHIFTS
+    """COSTING SERVICE""" shift(id: String!, projectId: String!, crudOptions: CrudOptionsInput): Shift
+    """COSTING SERVICE""" shifts(projectId: String!, crudOptions: CrudOptionsInput): [Shift]
+    # // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 24) TIMECODES
+    """COSTING SERVICE""" timecode(id: String!, projectId: String!, crudOptions: CrudOptionsInput): Timecode
+    """COSTING SERVICE""" timecodes(projectId: String!, active:Boolean, crudOptions: CrudOptionsInput): [Timecode]
+    # // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 26) EMAILS
+    """COSTING SERVICE""" timesheetApprovalEmailDataByProjectId(projectId: String!, formType: Int!, approval: Boolean!, crudOptions: CrudOptionsInput): TimesheetSubmitEmailData
+    """COSTING SERVICE""" timesheetSubmitEmailDataByProjectId(projectId: String!, formType: Int!, crudOptions: CrudOptionsInput): TimesheetSubmitEmailData
+    # // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 27) MEETING TYPES
+    """COSTING SERVICE"""  meetingType(id: String!, projectId: String!, crudOptions: CrudOptionsInput): MeetingType
+    """COSTING SERVICE"""  meetingTypes(projectId: String!, crudOptions: CrudOptionsInput): [MeetingType]
+    # // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 28) INSPECTION TYPES
+    """COSTING SERVICE"""  inspectionType(id: String!, projectId: String!, crudOptions: CrudOptionsInput): InspectionType
+    """COSTING SERVICE"""  inspectionTypes(projectId: String!, crudOptions: CrudOptionsInput): [InspectionType]    
+    # // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 30) VALIDATE
+    """COSTING SERVICE"""  validateToInsertUpdate(entity: String!, data: String!, projectId: String!): ValidateResponse
+}
+
+type Mutation {
+    # // -------------------------------------------------- COSTS --------------------------------------------------- //
+    # // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 1) COST CODES
+    """COSTING SERVICE""" deleteCostCode(id: String!, projectId: String!, crudOptions: CrudOptionsInput): CostCodeResponse
+    """COSTING SERVICE""" deleteCostCodes(ids: [String!]!, projectId: String!, crudOptions: CrudOptionsInput): CostCodeResponse
+    """COSTING SERVICE""" updateCostCode(costCode: CostCodeInput!, projectId: String!, crudOptions: CrudOptionsInput): CostCodeResponse
+    """COSTING SERVICE""" updateCostCodes(costCodes: [CostCodeInput!]!, projectId: String!, isBulkUpload: Boolean, crudOptions: CrudOptionsInput): CostCodeResponse
+    # // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 2) COST TYPES
+    """COSTING SERVICE""" deleteCostType(id: String!, projectId: String!, crudOptions: CrudOptionsInput): CostTypeResponse
+    """COSTING SERVICE""" deleteCostTypes(ids: [String!]!, projectId: String!, crudOptions: CrudOptionsInput): CostTypeResponse
+    """COSTING SERVICE""" updateCostType(costType: CostTypeInput!, projectId: String!, crudOptions: CrudOptionsInput): CostTypeResponse
+    """COSTING SERVICE""" updateCostTypes(costTypes: [CostTypeInput!]!, projectId: String!, isBulkUpload: Boolean, crudOptions: CrudOptionsInput): CostTypeResponse
+    # // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 3) CURRENCIES
+    """COSTING SERVICE""" deleteCurrencies(ids: [String!]!, projectId: String!, crudOptions: CrudOptionsInput): CurrencyResponse
+    """COSTING SERVICE""" deleteCurrency(id: String!, projectId: String!, crudOptions: CrudOptionsInput): CurrencyResponse
+    """COSTING SERVICE""" updateCurrencies(currencies: [CurrencyInput!]!, projectId: String!, isBulkUpload: Boolean, crudOptions: CrudOptionsInput): CurrencyResponse
+    """COSTING SERVICE""" updateCurrency(currency: CurrencyInput!, projectId: String!, crudOptions: CrudOptionsInput): CurrencyResponse
+    # // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 4) RATES
+    """COSTING SERVICE""" deleteResourceClassRate(id: String!, projectId: String!, crudOptions: CrudOptionsInput): ResourceClassRateResponse
+    """COSTING SERVICE""" deleteResourceClassRates(ids: [String!]!, projectId: String!, crudOptions: CrudOptionsInput): ResourceClassRateResponse
+    """COSTING SERVICE""" updateResourceClassRate(resourceClassRate: ResourceClassRateInput!, projectId: String!, crudOptions: CrudOptionsInput): ResourceClassRateResponse
+    """COSTING SERVICE""" updateResourceClassRates(resourceClassRates: [ResourceClassRateInput!]!, projectId: String!, isBulkUpload: Boolean, crudOptions: CrudOptionsInput): ResourceClassRateResponse
+    # // -------------------------------------------------- RESOURCES ------------------------------------------------ //
+    # // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 7) RESOURCE CLASSES
+    """COSTING SERVICE""" deleteResourceClass(id: String!, projectId: String!, crudOptions: CrudOptionsInput): ResourceClassResponse
+    """COSTING SERVICE""" deleteResourceClasses(ids: [String!]!, projectId: String!, crudOptions: CrudOptionsInput): ResourceClassResponse
+    """COSTING SERVICE""" updateResourceClass(resourceClass: ResourceClassInput!, projectId: String!, crudOptions: CrudOptionsInput): ResourceClassResponse
+    """COSTING SERVICE""" updateResourceClasses(resourceClasses: [ResourceClassInput!]!, projectId: String!, isBulkUpload: Boolean, crudOptions: CrudOptionsInput): ResourceClassResponse
+    # // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 10) LEASED EQUIPMENT
+    """COSTING SERVICE""" deleteLeasedEquipment(id: String!, projectId: String!, crudOptions: CrudOptionsInput): EquipmentResourceResponse
+    """COSTING SERVICE""" deleteLeasedEquipments(ids: [String!]!, projectId: String!, crudOptions: CrudOptionsInput): EquipmentResourceResponse
+    """COSTING SERVICE""" updateLeasedEquipment(leasedEquipment: EquipmentResourceInput!, projectId: String!, crudOptions: CrudOptionsInput): EquipmentResourceResponse
+    """COSTING SERVICE""" updateLeasedEquipments(leasedEquipments: [EquipmentResourceInput!]!, projectId: String!, isBulkUpload: Boolean, crudOptions: CrudOptionsInput): EquipmentResourceResponse
+    # // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 10) LEASED EQUIPMENT
+    """COSTING SERVICE""" deleteExternalEquipment(id: String!, projectId: String!, crudOptions: CrudOptionsInput): EquipmentResourceResponse
+    """COSTING SERVICE""" deleteExternalEquipments(ids: [String!]!, projectId: String!, crudOptions: CrudOptionsInput): EquipmentResourceResponse
+    """COSTING SERVICE""" updateExternalEquipment(externalEquipment: EquipmentResourceInput!, projectId: String!, crudOptions: CrudOptionsInput): EquipmentResourceResponse
+    """COSTING SERVICE""" updateExternalEquipments(externalEquipments: [EquipmentResourceInput!]!, projectId: String!, isBulkUpload: Boolean, crudOptions: CrudOptionsInput): EquipmentResourceResponse
+    # // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 11) OWNED EQUIPMENT
+    """COSTING SERVICE""" deleteOwnedEquipment(id: String!, projectId: String!, crudOptions: CrudOptionsInput): EquipmentResourceResponse
+    """COSTING SERVICE""" deleteOwnedEquipments(ids: [String!]!, projectId: String!, crudOptions: CrudOptionsInput): EquipmentResourceResponse
+    """COSTING SERVICE""" updateOwnedEquipment(ownedEquipment: EquipmentResourceInput!, projectId: String!, crudOptions: CrudOptionsInput): EquipmentResourceResponse
+    """COSTING SERVICE""" updateOwnedEquipments(ownedEquipments: [EquipmentResourceInput!]!, projectId: String!, isBulkUpload: Boolean, crudOptions: CrudOptionsInput): EquipmentResourceResponse
+    # // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 13) EXTERNAL LABOR
+    """COSTING SERVICE""" deleteExternalLabor(id: String!, projectId: String!, crudOptions: CrudOptionsInput): LaborResourceResponse
+    """COSTING SERVICE""" deleteExternalLabors(ids: [String!]!, projectId: String!, crudOptions: CrudOptionsInput): LaborResourceResponse
+    """COSTING SERVICE""" updateExternalLabor(externalLabor: LaborResourceInput!, projectId: String!, crudOptions: CrudOptionsInput): LaborResourceResponse
+    """COSTING SERVICE""" updateExternalLabors(externalLabors: [LaborResourceInput!]!, projectId: String!, isBulkUpload: Boolean, crudOptions: CrudOptionsInput): LaborResourceResponse
+    # // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 14) INTERNAL LABOR
+    """COSTING SERVICE""" deleteInternalLabor(id: String!, projectId: String!, crudOptions: CrudOptionsInput): LaborResourceResponse
+    """COSTING SERVICE""" deleteInternalLabors(ids: [String!]!, projectId: String!, crudOptions: CrudOptionsInput): LaborResourceResponse
+    """COSTING SERVICE""" updateInternalLabor(internalLabor: LaborResourceInput!, projectId: String!, crudOptions: CrudOptionsInput): LaborResourceResponse
+    """COSTING SERVICE""" updateInternalLabors(internalLabors: [LaborResourceInput!]!, projectId: String!, isBulkUpload: Boolean, crudOptions: CrudOptionsInput): LaborResourceResponse
+    # // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 15) SUBCONTRACTOR
+    """COSTING SERVICE""" deleteSubcontractor(id: String!, projectId: String!, crudOptions: CrudOptionsInput): SubcontractorResponse
+    """COSTING SERVICE""" deleteSubcontractors(ids: [String!]!, projectId: String!, crudOptions: CrudOptionsInput): SubcontractorResponse
+    """COSTING SERVICE""" updateSubcontractor(subcontractor: SubcontractorInput!, projectId: String!, crudOptions: CrudOptionsInput): SubcontractorResponse
+    """COSTING SERVICE""" updateSubcontractors(subcontractors: [SubcontractorInput!]!, projectId: String!, isBulkUpload: Boolean, crudOptions: CrudOptionsInput): SubcontractorResponse
+    # // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 16) WETHIRE
+    """COSTING SERVICE""" deleteWetHire(id: String!, projectId: String!, crudOptions: CrudOptionsInput): ResourceResponse
+    """COSTING SERVICE""" deleteWetHires(ids: [String!]!, projectId: String!, crudOptions: CrudOptionsInput): ResourceResponse
+    """COSTING SERVICE""" updateWetHire(wetHire: ResourceInput!, projectId: String!, crudOptions: CrudOptionsInput): ResourceResponse
+    """COSTING SERVICE""" updateWetHires(wetHires: [ResourceInput!]!, projectId: String!, isBulkUpload: Boolean, crudOptions: CrudOptionsInput): ResourceResponse
+    # // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 17) FUEL AND OIL
+    """COSTING SERVICE""" deleteFuelAndOil(id: String!, projectId: String!, crudOptions: CrudOptionsInput): ResourceResponse
+    """COSTING SERVICE""" deleteFuelAndOils(ids: [String!]!, projectId: String!, crudOptions: CrudOptionsInput): ResourceResponse
+    """COSTING SERVICE""" updateFuelAndOil(fuelAndOil: ResourceInput!, projectId: String!, crudOptions: CrudOptionsInput): ResourceResponse
+    """COSTING SERVICE""" updateFuelAndOils(fuelAndOils: [ResourceInput!]!, projectId: String!, isBulkUpload: Boolean, crudOptions: CrudOptionsInput): ResourceResponse
+    # // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 18) JOB POSITIONS
+    """COSTING SERVICE""" deleteJobPosition(id: String!, projectId: String!, crudOptions: CrudOptionsInput): JobPositionResponse
+    """COSTING SERVICE""" deleteJobPositions(ids: [String!]!, projectId: String!, crudOptions: CrudOptionsInput): JobPositionResponse
+    """COSTING SERVICE""" updateJobPosition(jobPosition: JobPositionInput!, projectId: String!, crudOptions: CrudOptionsInput): JobPositionResponse
+    """COSTING SERVICE""" updateJobPositions(jobPositions: [JobPositionInput!]!, projectId: String!, isBulkUpload: Boolean, crudOptions: CrudOptionsInput): JobPositionResponse
+    # // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 19) MATERIALS
+    """COSTING SERVICE""" deleteMaterial(id: String!, projectId: String!, crudOptions: CrudOptionsInput): MaterialResourceResponse
+    """COSTING SERVICE""" deleteMaterials(ids: [String!]!, projectId: String!, crudOptions: CrudOptionsInput): MaterialResourceResponse
+    """COSTING SERVICE""" updateMaterial(materialResource: MaterialResourceInput!, projectId: String!, crudOptions: CrudOptionsInput): MaterialResourceResponse
+    """COSTING SERVICE""" updateMaterials(materialResources: [MaterialResourceInput!]!, projectId: String!, isBulkUpload: Boolean, crudOptions: CrudOptionsInput): MaterialResourceResponse
+    # // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 20) WORKFORCE GROUPS
+    """COSTING SERVICE""" deleteWorkforceGroup(id: String!, projectId: String!, crudOptions: CrudOptionsInput): WorkforceGroupResponse
+    """COSTING SERVICE""" deleteWorkforceGroups(ids: [String!]!, projectId: String!, crudOptions: CrudOptionsInput): WorkforceGroupResponse
+    """COSTING SERVICE""" updateWorkforceGroups(workforceGroups: [WorkforceGroupInput!]!, isBulkUpload: Boolean, projectId: String!, crudOptions: CrudOptionsInput): WorkforceGroupResponse
+    """COSTING SERVICE""" updateWorkforceGroup(workforceGroup: WorkforceGroupInput!, projectId: String!, crudOptions: CrudOptionsInput): WorkforceGroupResponse
+    # // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 21) SUBCONTRACTOR CREW
+    """COSTING SERVICE""" deleteSubcontractorCrew(id: String!, projectId: String!, crudOptions: CrudOptionsInput): CrewResourceResponse
+    """COSTING SERVICE""" deleteSubcontractorCrews(ids: [String!]!, projectId: String!, crudOptions: CrudOptionsInput): CrewResourceResponse
+    """COSTING SERVICE""" updateSubcontractorCrew(subcontractorCrew: SubcontractorCrewInput!, projectId: String!, crudOptions: CrudOptionsInput): CrewResourceResponse
+    """COSTING SERVICE""" updateSubcontractorCrews(subcontractorCrews: [SubcontractorCrewInput!]!, projectId: String!, crudOptions: CrudOptionsInput): CrewResourceResponse
+
+    # // --------------------------------------------------- TIMESHEET ------------------------------------------------ //
+    # // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 22) INDIVIDUAL/WEEKLY/WORKCREW
+    # ON HOLD: NOT USED
+    """COSTING SERVICE""" deleteIndividualTimesheet(id: String!, projectId: String!, crudOptions: CrudOptionsInput): IndividualTimesheetResponse
+    """COSTING SERVICE""" deleteIndividualTimesheets(ids: [String!], projectId: String!, crudOptions: CrudOptionsInput): IndividualTimesheetResponse
+    """COSTING SERVICE""" updateIndividualTimesheet(inputs: IndividualTimesheetInput, projectId: String!, crudOptions: CrudOptionsInput): IndividualTimesheetsResponse
+    """COSTING SERVICE""" updateIndividualTimesheets(inputs: [IndividualTimesheetInput], projectId: String!, crudOptions: CrudOptionsInput): IndividualTimesheetsResponse
+
+    """COSTING SERVICE""" deleteWeeklyTimesheet(id: String!, projectId: String!, crudOptions: CrudOptionsInput): WeeklyTimesheetResponse
+    """COSTING SERVICE""" deleteWeeklyTimesheets(ids: [String!], projectId: String!, crudOptions: CrudOptionsInput): WeeklyTimesheetResponse
+    """COSTING SERVICE""" updateWeeklyTimesheet(inputs: WeeklyTimesheetInput, projectId: String!, crudOptions: CrudOptionsInput): WeeklyTimesheetsResponse
+    """COSTING SERVICE""" updateWeeklyTimesheets(inputs: [WeeklyTimesheetInput], projectId: String!, crudOptions: CrudOptionsInput): WeeklyTimesheetsResponse
+
+    """COSTING SERVICE""" deleteWorkCrewTimesheet(id: String!, projectId: String!, crudOptions: CrudOptionsInput): WorkCrewTimesheetResponse
+    """COSTING SERVICE""" deleteWorkCrewTimesheets(ids: [String!], projectId: String!, crudOptions: CrudOptionsInput): WorkCrewTimesheetResponse
+    """COSTING SERVICE""" updateWorkCrewTimesheet(input: WorkCrewTimesheetInput, projectId: String!, crudOptions: CrudOptionsInput): WorkCrewTimesheetsResponse
+    """COSTING SERVICE""" updateWorkCrewTimesheets(inputs: [WorkCrewTimesheetInput], projectId: String!, crudOptions: CrudOptionsInput): WorkCrewTimesheetsResponse
+
+    # // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 23) SHIFTS
+    """COSTING SERVICE""" deleteShift(id: String!, projectId: String!, crudOptions: CrudOptionsInput): ShiftResponse
+    """COSTING SERVICE""" deleteShifts(ids: [String!], projectId: String!, crudOptions: CrudOptionsInput): ShiftResponse
+    """COSTING SERVICE""" updateShift(shift: ShiftInput!, projectId: String!, crudOptions: CrudOptionsInput): ShiftResponse
+    """COSTING SERVICE""" updateShifts(shifts: [ShiftInput!]!, projectId: String!, isBulkUpload: Boolean, crudOptions: CrudOptionsInput): ShiftResponse
+    # // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 24) TIMECODES
+    """COSTING SERVICE""" deleteTimecode(id: String!, projectId: String!, crudOptions: CrudOptionsInput): TimecodeResponse,
+    """COSTING SERVICE""" deleteTimecodes(ids: [String!], projectId: String!, crudOptions: CrudOptionsInput): TimecodeResponse
+    """COSTING SERVICE""" updateTimecode(timecode:TimecodeInput!, projectId: String!, isBulkUpload: Boolean, crudOptions: CrudOptionsInput): TimecodeResponse
+    """COSTING SERVICE""" updateTimecodes(timecodes: [TimecodeInput!], projectId: String!, isBulkUpload: Boolean, crudOptions: CrudOptionsInput): TimecodeResponse
+    # // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 26) EMAILS
+    """COSTING SERVICE""" sendTimesheetEmails(emails: [TimesheetEmailInput], projectId: String!, crudOptions: CrudOptionsInput): TimesheetSendEmailsResponse
+    """COSTING SERVICE""" setTimesheetApprovalEmailData(approvalEmailData: TimesheetSubmitEmailDataInput, projectId: String!, crudOptions: CrudOptionsInput): TimesheetSubmitEmailDataResponse
+    """COSTING SERVICE""" setTimesheetSubmitEmailData(submitEmailData: TimesheetSubmitEmailDataInput, projectId: String!, crudOptions: CrudOptionsInput): TimesheetSubmitEmailDataResponse
+    # // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 27) MEETING TYPES
+    """COSTING SERVICE"""  deleteMeetingType(id: String!, projectId: String, crudOptions: CrudOptionsInput): MeetingTypesResponse
+    """COSTING SERVICE"""  deleteMeetingTypes(ids: [String!]!, projectId: String, crudOptions: CrudOptionsInput): MeetingTypesResponse
+    """COSTING SERVICE"""  updateMeetingType(meetingType: MeetingTypeInput, projectId: String!, crudOptions: CrudOptionsInput): MeetingTypesResponse
+    """COSTING SERVICE"""  updateMeetingTypes(meetingTypes: [MeetingTypeInput], projectId: String!, isBulkUpload: Boolean, crudOptions: CrudOptionsInput): MeetingTypesResponse
+    # // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 28) INSPECTION TYPES
+    """COSTING SERVICE"""  deleteInspectionType(id: String!, projectId: String, crudOptions: CrudOptionsInput): InspectionTypesResponse
+    """COSTING SERVICE"""  deleteInspectionTypes(ids: [String!]!, projectId: String, crudOptions: CrudOptionsInput): InspectionTypesResponse
+    """COSTING SERVICE"""  updateInspectionType(inspectionType: InspectionTypeInput, projectId: String!, crudOptions: CrudOptionsInput): InspectionTypesResponse
+    """COSTING SERVICE"""  updateInspectionTypes(inspectionTypes: [InspectionTypeInput], projectId: String!, isBulkUpload: Boolean, crudOptions: CrudOptionsInput): InspectionTypesResponse
+    # // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 29) MUSTER REPORT
+    """COSTING SERVICE"""  sendMusterReport(musterReport: MusterReportInput!, projectId: String!, crudOptions: CrudOptionsInput): SendMusterReportResponse
+    """COSTING SERVICE"""  addCostingFile(costingFile: CostingFileInput!, projectId: String!, crudOptions: CrudOptionsInput): CostingFileResponse
+    """COSTING SERVICE"""  deleteCostingFile(id: String!, projectId: String!, isBulkUpload: Boolean, crudOptions: CrudOptionsInput): CostingFileResponse
+}
+
+# // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++//
+# // +++++++++++++++++++++++++++++++++++++++++++++++ EXTERNAL FIELDS ++++++++++++++++++++++++++++++++++++++++++++//
+# // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++//
+type Activity @key(fields: "internalId projectId scheduleFileTypeId") @extends {
+    internalId: String! @external
+    projectId: String! @external
+    scheduleFileTypeId: ID @external
+}
+type  NonScheduledActivity @key(fields: "id projectId") @extends {
+    id: String @external
+    projectId: String @external
+}
+type Company @key(fields: "id") @extends {
+    id: String @external
+}
+type SubLocation @key(fields: "id") @extends {
+    id: String! @external
+}
+type UnitOfMeasure @key(fields: "id") @extends {
+    id: ID @external
+}
+type User @key(fields: "id") @extends {
+    id: String! @external
+}
+type Project @key(fields:"id") @extends {
+    id: String! @external
+}
+type File @key(fields: "guid projectId") @extends {
+    guid: String @external
+    projectId: String @external
+}
+
+# // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++//
+# // +++++++++++++++++++++++++++++++++++++++++++++++++ RESPONSES ++++++++++++++++++++++++++++++++++++++++++++++++//
+# // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++//
+
+# // -------------------------------------------------- COSTS -------------------------------------------------- //
+# // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 1) COST CODES
+type CostCodeResponse{
+    code: Int
+    data: [CostCode]
+    errors: [String]
+    messages: [String]
+}
+# // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 2) COST TYPES
+type CostTypeResponse{
+    code: Int
+    data: [CostType]
+    errors: [String]
+    messages: [String]
+}
+# // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 3) CURRENCIES
+type CurrencyResponse{
+    code: Int
+    data: [Currency]
+    errors: [String]
+    messages: [String]
+}
+# // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 4) RATES
+type ResourceClassRateResponse {
+    code: Int
+    data: [ResourceClassRate]
+    errors: [String]
+    messages: [String]
+}
+# // ------------------------------------------------ RESOURCES ------------------------------------------------ //
+type Category {
+    category: String
+    group: [String]
+    name: String
+}
+# // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 6) RESOURCE
+type ResourceResponse {
+    code: Int
+    data: [Resource]
+    errors: [String]
+    messages: [String]
+}
+# // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 7) RESOURCE CLASSES
+type ResourceClassResponse {
+    code: Int
+    data: [ResourceClass]
+    messages: [String]
+    errors: [String]
+}
+
+enum ECategory {
+    internal_labor
+    external_labor
+    material
+    leased_equipment
+    owned_equipment
+    external_equipment
+    wethire
+    subcontractor
+    fuel_and_oil
+}
+
+# // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 9) EQUIPMENT
+type EquipmentResourceResponse {
+    code: Int
+    data: [EquipmentResource]
+    errors: [String]
+    messages: [String]
+}
+# // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 12) LABOR
+type LaborResourceResponse {
+    code: Int
+    data: [LaborResource]
+    errors: [String]
+    messages: [String]
+}
+# // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 15) SUBCONTRACTOR
+type SubcontractorResponse {
+    code: Int
+    data: [Subcontractor]
+    errors: [String]
+    messages: [String]
+}
+# // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 18) JOB POSITIONS
+type JobPositionResponse {
+    code: Int
+    data: [JobPosition]
+    errors: [String]
+    messages: [String]
+}
+# // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 19) MATERIALS
+type MaterialResourceResponse {
+    code: Int
+    data: [MaterialResource]
+    errors: [String]
+    messages: [String]
+}
+# // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 20) WORKFORCE GROUPS
+type WorkforceGroupResponse {
+    code: Int
+    data: [WorkforceGroup]
+    errors: [String]
+    messages: [String]
+}
+# // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 22) SUBCONTRACTOR CREW
+type CrewResourceResponse {
+    code: Int
+    data: [CrewResource]
+    errors: [String]
+    messages: [String]
+}
+
+# // -------------------------------------------------- TIMESHEET ------------------------------------------------- //
+# // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 22) INDIVIDUAL/WEEKLY/WORKCREW
+type IndividualTimesheetsResponse {
+    code: Int
+    data: [IndividualTimesheet]
+    message: String
+    success: Boolean
+}
+type IndividualTimesheetResponse {
+    code: Int
+    data: IndividualTimesheet
+    message: String
+    success: Boolean
+}
+type WorkCrewTimesheetsResponse {
+    code: Int
+    data: [WorkCrewTimesheet]
+    message: String
+    success: Boolean
+}
+type WorkCrewTimesheetResponse {
+    code: Int
+    data: WorkCrewTimesheet
+    message: String
+    success: Boolean
+}
+type WeeklyTimesheetsResponse {
+    code: Int
+    data: [WeeklyTimesheet]
+    message: String
+    success: Boolean
+}
+type WeeklyTimesheetResponse {
+    code: Int
+    data: WeeklyTimesheet
+    message: String
+    success: Boolean
+}
+# // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 22) SHIFTS
+type ShiftResponse {
+    code: Int
+    data: [Shift]
+    errors: [String]
+    messages: [String]
+}
+# // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 24) TIMECODES
+type TimecodeResponse {
+    code: Int
+    data: [Timecode]
+    errors: [String]
+    messages: [String]
+}
+# // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 26) EMAILS
+type TimesheetSubmitEmailDataResponse {
+    code: Int
+    data: TimesheetSubmitEmailData
+    message: String
+    success: Boolean
+}
+type TimesheetSendEmailsResponse {
+    code: Int
+    message: String
+    success: Boolean
+}
+# // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 27) MEETING TYPES
+type MeetingTypesResponse {
+    code: Int
+    data: [MeetingType]
+    errors: [String]
+    messages: [String]
+}
+# // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 28) INSPECTION TYPES
+type InspectionTypesResponse {
+    code: Int
+    data: [InspectionType]
+    errors: [String]
+    messages: [String]
+}
+# // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 29) MUSTER REPORT
+type SendMusterReportResponse {
+    code: Int
+    data: [MusterReport]
+    errors: [String]
+    messages: [String]
+}
+type CostingFileResponse {
+    code: Int
+    messages: [String]
+    errors: [String]
+    data: [CostingFile]
+}
+
+type ValidateResponse{
+    code: Int
+    errors: [String]
+}
+
+# // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++//
+# // ++++++++++++++++++++++++++++++++++++++++++++++++++ TYPES +++++++++++++++++++++++++++++++++++++++++++++++++++//
+# // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++//
+type CostingVersion {
+    buildTag: String
+    version: String
+}
+type CostingHistory {
+    action: String
+    changeLog: [CostingHistoryChange]
+    collection: String
+    id: String
+    parentID: String
+    projectId: String
+    # Audit Fields
+    createDate: CostingDateTime
+    createUser: User @provides(fields: "id")
+    deletedDate: CostingDateTime
+    deletedUser: User @provides(fields: "id")
+    modifiedDate: CostingDateTime
+    modifiedUser: User @provides(fields: "id")
+}
+type CostingHistoryChange {
+    field: String
+    newValue: String
+    oldValue: String
+}
+type ServiceMetadata @key(fields: "application") @extends {
+    application: String! @external
+    corfu: [QueryMetadata] @provides(fields: "queryName friendlyName description")
+}
+type QueryMetadata @key(fields: "queryName") @extends {
+    description: [TranslatableString]! @external
+    friendlyName: [TranslatableString]! @external
+    queryName: String! @external
+}
+type TranslatableString @key(fields: "language text") @extends {
+    language: String! @external
+    text: String! @external
+}
+type AuthorizationScopes @key(fields: "projectId") @extends {
+    projectId: String! @external
+    corfu: [String]
+}
+
+type Version @key(fields: "commonTypesService") @extends {
+    commonTypesService: String! @external
+    corfu: String!
+}
+
+type HealthCheck @key(fields: "commonTypesService") @extends {
+    commonTypesService: String! @external
+    corfu: String!
+}
+
+# // -------------------------------------------------- COSTS --------------------------------------------------- //
+# // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 1) COST CODES
+type CostCode @key(fields: "id"){
+    code: String
+    costType: CostType
+    description: String
+    id: String
+    ozSub: String
+    projectId: String
+    unitOfMeasure: UnitOfMeasure @provides(fields: "id")
+
+    # SPE
+    forecastAmount: Float
+    forecastQuantity: Float
+    plannedAmount: Float
+    plannedQuantity: Float
+    plannedUnitCost: Float
+
+    # Audit Fields
+    createDate: CostingDateTime
+    createUser: User @provides(fields: "id")
+    deletedDate: CostingDateTime
+    deletedUser: User @provides(fields: "id")
+    modifiedDate: CostingDateTime
+    modifiedUser: User @provides(fields: "id")
+}
+# // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 2) COST TYPES
+type CostType @key(fields: "id"){
+    active: Boolean
+    category: String
+    code: String
+    description: String
+    id: String
+    projectId: String
+    # Audit Fields
+    createDate: CostingDateTime
+    createUser: User @provides(fields: "id")
+    deletedDate: CostingDateTime
+    deletedUser: User @provides(fields: "id")
+    modifiedDate: CostingDateTime
+    modifiedUser: User @provides(fields: "id")
+}
+# // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 3) CURRENCIES
+type Currency @key(fields: "id") {
+    currencyCode: String
+    currencyName: String
+    id: String
+    projectId: String
+    symbol: String
+    # Audit Fields
+    createDate: CostingDateTime
+    createUser: User @provides(fields: "id")
+    deletedDate: CostingDateTime
+    deletedUser: User @provides(fields: "id")
+    modifiedDate: CostingDateTime
+    modifiedUser: User @provides(fields: "id")
+}
+# // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 4) RATES
+type ResourceClassRate @key(fields: "id resourceClassId projectId shiftId date") {
+    active: Boolean
+    baseRate: Float
+    dateOfEffect: CostingDate
+    fromLocation: SubLocation @provides(fields: "id")
+    id: String
+    markedUpRate: Float
+    projectId: String
+    ratesReporting: ResolverReporting
+    resourceClass: ResourceClass
+    shift: Shift
+    toLocation: SubLocation @provides(fields: "id")
+    unitOfMeasure: UnitOfMeasure @provides(fields: "id")
+    # Reporting Resolver
+    shiftId: String
+    resourceClassId: String
+    date: String
+    # Audit Fields
+    createDate: CostingDateTime
+    createUser: User @provides(fields: "id")
+    deletedDate: CostingDateTime
+    deletedUser: User @provides(fields: "id")
+    modifiedDate: CostingDateTime
+    modifiedUser: User @provides(fields: "id")
+}
+type ResolverReporting {
+    date: String
+    projectId: String
+    resourceClass: String
+    shift: String
+}
+
+# // -------------------------------------------------- RESOURCES ------------------------------------------------ //
+# // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 6) RESOURCE
+type Resource @key(fields: "id") {
+    active: Boolean
+    autoDocket: Boolean
+    barCodeNumber: String
+    class: ResourceClass
+    category: CategoryScalar
+    subcategory: String
+    closed: Boolean
+    code: String
+    company: Company @provides(fields: "id")
+    contractNumber: String
+    email: String
+    employeeNumber: String
+    fuelProvided: Boolean
+    id: String
+    includeMaintenance: Boolean
+    jdeNumber: String
+    manufacturer: String
+    middleName: String
+    mobile: String
+    model: String
+    name: String
+    poNumber: String
+    ppeProvided: Boolean
+    projectId: String
+    resourceTitle: JobPosition
+    roleNumber: String
+    startDate: CostingDateTime
+    surname: String
+    terminateDate: CostingDateTime
+    timeEntry: Boolean
+    user: User @provides(fields: "id")
+    # Audit Fields
+    createDate: CostingDateTime
+    createUser: User @provides(fields: "id")
+    deletedDate: CostingDateTime
+    deletedUser: User @provides(fields: "id")
+    modifiedDate: CostingDateTime
+    modifiedUser: User @provides(fields: "id")
+}
+# // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 7) RESOURCE CLASSES
+type ResourceClass @key(fields: "id") {
+    active: Boolean
+    category: ECategory
+    company: Company @provides(fields: "id")
+    id: String
+    name: String
+    projectId: String
+    workforceGroup: WorkforceGroup
+    # Audit Fields
+    createDate: CostingDateTime
+    createUser: User @provides(fields: "id")
+    deletedDate: CostingDateTime
+    deletedUser: User @provides(fields: "id")
+    modifiedDate: CostingDateTime
+    modifiedUser: User @provides(fields: "id")
+}
+
+type ResourceClassesByCompany {
+    company: Company @provides(fields: "id")
+    classes: [ResourceClass]
+}
+
+# // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 9) EQUIPMENT
+type EquipmentResource @key(fields: "id") {
+    active: Boolean
+    category: CategoryScalarEquipment
+    subcategory: String
+    autoDocket: Boolean
+    barCodeNumber: String
+    class: ResourceClass
+    company: Company @provides(fields: "id")
+    contractNumber: String
+    fuelProvided: Boolean
+    id: String
+    includeMaintenance: Boolean
+    manufacturer: String
+    model: String
+    name: String
+    poNumber: String
+    ppeProvided: Boolean
+    projectId: String
+    startDate: CostingDateTime
+    terminateDate: CostingDateTime
+    timeEntry: Boolean
+    # Audit Fields
+    createDate: CostingDateTime
+    createUser: User @provides(fields: "id")
+    deletedDate: CostingDateTime
+    deletedUser: User @provides(fields: "id")
+    modifiedDate: CostingDateTime
+    modifiedUser: User @provides(fields: "id")
+}
+# // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 12) LABOR
+type LaborResource @key(fields: "id") {
+    active: Boolean
+    class: ResourceClass
+    category: CategoryScalar
+    subcategory: String
+    company: Company @provides(fields: "id")
+    email: String
+    employeeNumber: String
+    id: String
+    middleName: String
+    mobile: String
+    name: String
+    projectId: String
+    resourceTitle: JobPosition
+    roleNumber: String
+    startDate: CostingDateTime
+    surname: String
+    terminateDate: CostingDateTime
+    # Audit Fields
+    createDate: CostingDateTime
+    createUser: User @provides(fields: "id")
+    deletedDate: CostingDateTime
+    deletedUser: User @provides(fields: "id")
+    modifiedDate: CostingDateTime
+    modifiedUser: User @provides(fields: "id")
+}
+# // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 15) SUBCONTRACTOR
+type Subcontractor @key(fields: "id") {
+    category: CategoryScalar
+    class: ResourceClass
+    company: Company @provides(fields: "id")
+    id: String
+    name: String
+    middleName: String
+    surname: String
+    position: JobPosition
+    projectId: String
+    startDate: CostingDateTime
+    subcategory: String
+    active: Boolean
+    email: String
+    employeeNumber: String
+    mobile: String
+    resourceTitle: JobPosition
+    roleNumber: String
+    terminateDate: CostingDateTime
+
+    # Audit Fields
+    createDate: CostingDateTime
+    createUser: User @provides(fields: "id")
+    deletedDate: CostingDateTime
+    deletedUser: User @provides(fields: "id")
+    modifiedDate: CostingDateTime
+    modifiedUser: User @provides(fields: "id")
+}
+# // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 18) JOB POSITIONS
+type JobPosition @key(fields: "id") {
+    description: String
+    id: String
+    name: String
+    projectId: String
+    # Audit Fields
+    createDate: CostingDateTime
+    createUser: User @provides(fields: "id")
+    deletedDate: CostingDateTime
+    deletedUser: User @provides(fields: "id")
+    modifiedDate: CostingDateTime
+    modifiedUser: User @provides(fields: "id")
+}
+# // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 19) MATERIALS
+type MaterialResource @key(fields: "id") {
+    active: Boolean
+    class: ResourceClass
+    category: CategoryScalar
+    subcategory: String
+    closed: Boolean
+    code: String
+    company: Company @provides(fields: "id")
+    id: String
+    name: String
+    projectId: String
+    startDate: String
+    # Audit Fields
+    createDate: CostingDateTime
+    createUser: User @provides(fields: "id")
+    deletedDate: CostingDateTime
+    deletedUser: User @provides(fields: "id")
+    modifiedDate: CostingDateTime
+    modifiedUser: User @provides(fields: "id")
+}
+# // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 20) WORKFORCE GROUPS
+type WorkforceGroup @key(fields: "id") {
+    active: Boolean
+    description: String
+    id: String
+    name: String
+    projectId: String
+    # Audit Fields
+    createDate: CostingDateTime
+    createUser: User @provides(fields: "id")
+    deletedDate: CostingDateTime
+    deletedUser: User @provides(fields: "id")
+    modifiedDate: CostingDateTime
+    modifiedUser: User @provides(fields: "id")
+}
+# // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 21) SUBCONTRACTOR CREW
+type CrewResource @key(fields: "id") {
+    id: String
+    category: CategoryScalar
+    class: ResourceClass
+    company: Company @provides(fields: "id")
+    name: String
+    position: JobPosition
+    projectId: String
+    subcategory: String
+
+    # Audit Fields
+    createDate: CostingDateTime
+    createUser: User @provides(fields: "id")
+    deletedDate: CostingDateTime
+    deletedUser: User @provides(fields: "id")
+    modifiedDate: CostingDateTime
+    modifiedUser: User @provides(fields: "id")
+}
+# // -------------------------------------------------- TIMESHEET ----------------------------------------------- //
+type TimesheetApproval {
+    approvedBy: String
+    approvedDate: CostingDateTime
+    comments: String
+    rejectedBy: String
+    rejectedDate: CostingDateTime
+}
+type IndividualTimesheet @key(fields: "id") {
+    additionalNotes: String
+    approval: TimesheetApproval
+    breaks: [Break]
+    completeSignature: String
+    dateComplete: CostingDateTime
+    id: String
+    labor: [IndivitualTimesheetPlantActivity]
+    materials: [TimesheetMaterial]
+    otherActivities: [IndividualTimesheetActivity]
+    parentEntry: IndividualTimesheet
+    plantTimesheet: [IndividualTimesheetPlant]
+    projectId: String
+    report_number: String
+    shiftInformation: ShiftInformation
+    supervisorComments: String
+    # Audit Fields
+    createDate: CostingDateTime
+    createUser: User @provides(fields: "id")
+    deletedDate: CostingDateTime
+    deletedUser: User @provides(fields: "id")
+    modifiedDate: CostingDateTime
+    modifiedUser: User @provides(fields: "id")
+}
+type TimesheetMaterial {
+    activity: Activity @provides(fields: "internalId projectId")
+    boqItem: String
+    files: [TimesheetFile]
+    materialDescription: String
+    notes: String
+    plannedQuantity: String
+    quantityInstalled: String
+    uom: String
+}
+type TimesheetFile {
+    extension: String
+    gUID: String
+    name: String
+    path: String
+    thumbnail: String
+    uploadDate: CostingDateTime
+}
+type WorkCrewTimesheet @key(fields: "id") {
+    additionalNotes: String
+    completeSignature: String
+    dateComplete: CostingDateTime
+    id: String
+    labors: [WorkCrewTimesheetLabor]
+    plantsTimesheet: [WorkCrewTimesheetPlant]
+    projectId: String
+    reportNumber: String
+    shiftInformation: ShiftInformation
+    # Audit Fields
+    createDate: CostingDateTime
+    createUser: User @provides(fields: "id")
+    deletedDate: CostingDateTime
+    deletedUser: User @provides(fields: "id")
+    modifiedDate: CostingDateTime
+    modifiedUser: User @provides(fields: "id")
+}
+type WeeklyTimesheet @key(fields: "id") {
+    additionalNotes: String
+    approval: TimesheetApproval
+    completeSignature: String
+    dateComplete: CostingDateTime
+    defaultSubproject: Project @provides(fields: "id")
+    id: String
+    manager: User @provides(fields: "id")
+    parentEntry: WeeklyTimesheet
+    projectId: String
+    projectTimeEntries: [ProjectTimeEntry]
+    reportNumber: String
+    submission: Boolean
+    weekCommencing: CostingDateTime
+    # Audit Fields
+    createDate: CostingDateTime
+    createUser: User @provides(fields: "id")
+    deletedDate: CostingDateTime
+    deletedUser: User @provides(fields: "id")
+    modifiedDate: CostingDateTime
+    modifiedUser: User @provides(fields: "id")
+}
+
+type Break {
+    duration: Float
+    startTime: String
+}
+type WorkCrewTimesheetLabor {
+    company: Company @provides(fields: "id")
+    crewMember: Resource
+    endTime: String
+    lunchTime: Boolean
+    notes: String
+    startTime: String
+    totalCrewMemberHours: Float
+}
+type WorkCrewTimesheetPlant {
+    endSmu: Float
+    notes: String
+    operator: String
+    plant: Resource
+    startSmu: Float
+    subContractor: String
+}
+type IndividualTimesheetActivity {
+    activity: NonScheduledActivity @provides(fields: "id projectId")
+    dateForEntry: CostingDateTime
+    durationTime: Float
+}
+type IndividualTimesheetPlant {
+    activities: [IndivitualTimesheetPlantActivity]
+    company: Company @provides(fields: "id")
+    dateForEntry: CostingDateTime
+    durationTime: Float
+    loads: [Load]
+    notes: String
+    plant: Resource
+    quantity: Float
+    unitNumber: String
+}
+type IndivitualTimesheetPlantActivity {
+    activity: Activity @provides(fields: "internalId projectId")
+    area: SubLocation @provides(fields: "id")
+    dateForEntry: CostingDateTime
+    durationTime: Float
+}
+type Load {
+    count: Int
+    fromArea: SubLocation @provides(fields: "id")
+    material: Resource
+    toArea: SubLocation @provides(fields: "id")
+}
+type ProjectTimeEntry {
+    days: [Days]
+    notes: String
+    subproject: Project @provides(fields: "id")
+    timeType: Timecode
+}
+type Days {
+    hours: Float
+}
+# // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 22) SHIFTS
+type Shift @key(fields: "id") {
+    description: String
+    endTime: String
+    id: String
+    inTimeSheet: Boolean
+    name: String
+    projectId: String
+    startTime: String
+    timecode: Timecode
+    # Audit Fields
+    createDate: CostingDateTime
+    createUser: User @provides(fields: "id")
+    deletedDate: CostingDateTime
+    deletedUser: User @provides(fields: "id")
+    modifiedDate: CostingDateTime
+    modifiedUser: User @provides(fields: "id")
+}
+type ShiftInformation {
+    endTime: String
+    responsibleEngineer: User @provides(fields: "id")
+    shiftDate: CostingDateTime
+    shiftType: Shift
+    startTime: String
+}
+# // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 24) TIMECODES
+type Timecode @key(fields: "id") {
+    active: Boolean
+    code: String
+    description: String
+    id: String
+    isProductive: Boolean
+    multiplier: Float
+    name: String
+    projectId: String
+    # Audit Fields
+    createDate: CostingDateTime
+    createUser: User @provides(fields: "id")
+    deletedDate: CostingDateTime
+    deletedUser: User @provides(fields: "id")
+    modifiedDate: CostingDateTime
+    modifiedUser: User @provides(fields: "id")
+}
+# // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 25) CONFIG
+type TimesheetProjectConfiguration {
+    isShiftConfigured: Boolean
+    isTimecodeConfigured: Boolean
+    projectId: String
+    # Audit Fields
+    createDate: CostingDateTime
+    createUser: User @provides(fields: "id")
+    deletedDate: CostingDateTime
+    deletedUser: User @provides(fields: "id")
+    modifiedDate: CostingDateTime
+    modifiedUser: User @provides(fields: "id")
+}
+# // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 26) EMAILS
+type TimesheetSubmitEmailData @key(fields: "id") {
+    approvalForm: Boolean
+    emailContent: String
+    formType: Int
+    id: String
+    projectId: String
+}
+# // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 27) MEETING TYPES
+type MeetingType @key(fields: "id") {
+    id: String
+    projectId: String
+    type_EN: String
+    type_DE: String
+    type_ES: String
+    sortSeq: Int
+    active: Boolean
+    canBeDeleted: Boolean
+    # Audit Fields
+    createDate: CostingDateTime
+    createUser: User @provides(fields: "id")
+    deletedDate: CostingDateTime
+    deletedUser: User @provides(fields: "id")
+    modifiedDate: CostingDateTime
+    modifiedUser: User @provides(fields: "id")
+}
+# // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 28) INSPECTION TYPES
+type InspectionType @key(fields: "id"){
+    id: String
+    name: String
+    description: String
+    active: Boolean
+    projectId: String
+    # Audit Fields
+    createDate: CostingDateTime
+    createUser: User @provides(fields: "id")
+    deletedDate: CostingDateTime
+    deletedUser: User @provides(fields: "id")
+    modifiedDate: CostingDateTime
+    modifiedUser: User @provides(fields: "id")
+}
+# // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 29) MUSTER REPORT
+type MusterReport @key(fields: "id"){
+    id: String
+    docket: String
+    attendees: [String]
+    notes : String
+    files: [CostingFile]
+    guests: [Guest]
+}
+type Guest {
+    name: String
+    company: String
+}
+type CostingFile {
+    id: String
+    docket: String
+    file: File @provides(fields: "guid projectId")
+    description: String
+    thumbnail: String
+    section: String
+    activity: Activity @provides(fields: "internalId projectId scheduleFileTypeId")
+    # Audit Fields
+    createDate: CostingDateTime
+    createUser: User @provides(fields: "id")
+    deletedDate: CostingDateTime
+    deletedUser: User @provides(fields: "id")
+    modifiedDate: CostingDateTime
+    modifiedUser: User @provides(fields: "id")
+}
+
+# // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++//
+# // +++++++++++++++++++++++++++++++++++++++++++++++ INPUT TYPES ++++++++++++++++++++++++++++++++++++++++++++++++//
+# // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++//
+input GenericIdInput {
+    id: String
+}
+input GenericNotNullIdInput {
+    id: String!
+}
+
+# // -------------------------------------------------- COSTS -------------------------------------------------- //
+# // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 1) COST CODES
+input CostCodeInput{
+    code: String!
+    costType: GenericIdInput
+    description: String!
+    id: String
+    ozSub: String
+    projectId: String!
+    unitOfMeasure: GenericIdInput
+
+    # SPE
+    forecastAmount: Float
+    forecastQuantity: Float
+    plannedAmount: Float
+    plannedQuantity: Float
+    plannedUnitCost: Float
+}
+# // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 2) COST TYPES
+input CostTypeInput{
+    active: Boolean!
+    category: String
+    code: String!
+    description: String!
+    id: String
+    projectId: String!
+}
+# // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 3) CURRENCIES
+input CurrencyInput{
+    currencyCode: String!
+    currencyName: String!
+    id: String
+    projectId: String!
+    symbol: String!
+}
+# // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 4) RATES
+input ResourceClassRateInput {
+    active: Boolean
+    baseRate: Float!
+    dateOfEffect: CostingDate!
+    fromLocation: GenericNotNullIdInput
+    id: String
+    markedUpRate: Float
+    projectId: String!
+    resourceClass: GenericIdInput!
+    shift: GenericIdInput!
+    toLocation: GenericNotNullIdInput
+    unitOfMeasure: GenericIdInput!
+}
+# // -------------------------------------------------- RESOURCES ----------------------------------------------- //
+# // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 6) RESOURCE
+input ResourceInput {
+    active: Boolean!
+    autoDocket: Boolean
+    barCodeNumber: String
+    class: GenericIdInput!
+    closed: Boolean
+    code: String
+    company: GenericIdInput
+    contractNumber: String
+    email: String
+    employeeNumber: String
+    fuelProvided: Boolean
+    id: String
+    includeMaintenance: Boolean
+    jdeNumber: String
+    manufacturer: String
+    middleName: String
+    mobile: String
+    model: String
+    name: String
+    poNumber: String
+    ppeProvided: Boolean
+    projectId: String
+    resourceTitle: GenericIdInput
+    roleNumber: String
+    startDate: CostingDateTime!
+    surname: String
+    terminateDate: CostingDateTime
+    timeEntry: Boolean
+    user: GenericIdInput
+}
+# // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 7) RESOURCE CLASSES
+input ResourceClassInput {
+    active: Boolean
+    classRates: [GenericIdInput]
+    company: GenericIdInput!
+    category: ECategory!
+    id: String
+    name: String!
+    projectId: String!
+    workforceGroup: GenericIdInput!
+}
+# // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 9) EQUIPMENT
+input EquipmentResourceInput {
+    active: Boolean!
+    autoDocket: Boolean
+    barCodeNumber: String
+    class: GenericIdInput!
+    company: GenericIdInput
+    contractNumber: String
+    fuelProvided: Boolean
+    id: String
+    includeMaintenance: Boolean
+    manufacturer: String
+    model: String
+    name: String
+    poNumber: String
+    ppeProvided: Boolean
+    projectId: String
+    startDate: CostingDateTime!
+    terminateDate: CostingDateTime
+    timeEntry: Boolean
+}
+# // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 12) LABOR
+input LaborResourceInput {
+    active: Boolean!
+    class: GenericIdInput!
+    company: GenericIdInput
+    email: String
+    employeeNumber: String
+    id: String
+    middleName: String
+    mobile: String
+    name: String
+    projectId: String
+    resourceTitle: GenericIdInput
+    roleNumber: String
+    startDate: CostingDateTime!
+    surname: String
+    terminateDate: CostingDateTime
+}
+# // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 15) SUBCONTRACTOR
+input SubcontractorInput {
+    company: GenericIdInput
+    id: String
+    name: String
+    position: GenericIdInput
+    projectId: String
+    startDate: CostingDateTime!
+    middleName: String
+    surname: String
+    active: Boolean
+    email: String
+    employeeNumber: String
+    mobile: String
+    resourceTitle: GenericIdInput
+    roleNumber: String
+    terminateDate: CostingDateTime
+    class: GenericIdInput!
+}
+# // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 18) JOB POSITIONS
+input JobPositionInput {
+    description: String
+    id: String
+    name: String!
+    projectId: String
+}
+# // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 19) MATERIALS
+input MaterialResourceInput {
+    active: Boolean!
+    class: GenericIdInput!
+    closed: Boolean
+    code: String
+    company: GenericIdInput
+    id: String
+    name: String
+    projectId: String
+    startDate: String!
+}
+# // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 20) WORKFORCE GROUPS
+input WorkforceGroupInput {
+    active: Boolean!
+    description: String
+    id: String
+    name: String!
+    projectId: String!
+}
+# // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 21) SUBCONTRACTOR CREW
+input SubcontractorCrewInput {
+    id: String
+    company: GenericIdInput
+    name: String
+    position: GenericIdInput!
+    projectId: String
+    class: GenericIdInput!
+}
+
+# // ------------------------------------------------- TIMESHEET ----------------------------------------------- //
+# // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 22) INDIVIDUAL/WEEKLY/WORKCREW
+input IndividualTimesheetInput {
+    additionalNotes: String
+    approval: TimesheetApprovalInput
+    breaks: [BreakInput]
+    completeSignature: String
+    createDate: CostingDateTime
+    createUserId: String
+    dateComplete: CostingDateTime
+    id: String
+    labor: [IndivitualTimesheetPlantActivityInput]
+    materials: [TimesheetMaterialInput]
+    modifiedUserId: String
+    otherActivities: [IndividualTimesheetActivityInput]
+    parentEntry: GenericIdInput
+    plantTimesheet: [IndividualTimesheetPlantInput]
+    projectId: String
+    report_number: String
+    shiftInformation: ShiftInformationInput
+    supervisorComments: String
+}
+input TimesheetMaterialInput {
+    activity: ActivityTimesheetInput!
+    boqItem: String!
+    files: [TimesheetFileInput]
+    materialDescription: String!
+    notes: String
+    plannedQuantity: String
+    quantityInstalled: String!
+    uom: String
+}
+input TimesheetFileInput {
+    extension: String
+    gUID: String
+    name: String
+    path: String
+    thumbnail: String
+    uploadDate: CostingDateTime
+}
+input WorkCrewTimesheetInput {
+    additionalNotes: String
+    completeSignature: String
+    createDate: CostingDateTime
+    createUserId: String
+    dateComplete: CostingDateTime
+    id: String
+    labors: [WorkCrewTimesheetLaborInput]
+    modifiedDate: CostingDateTime
+    modifiedUserId: String
+    plantsTimesheet: [WorkCrewTimesheetPlantInput]
+    projectId: String
+    reportNumber: String
+    shiftInformation: ShiftInformationInput
+}
+input WeeklyTimesheetInput {
+    additionalNotes: String
+    approval: TimesheetApprovalInput
+    completeSignature: String
+    dateComplete: CostingDateTime
+    defaultSubproject: GenericIdInput
+    id: String
+    manager: GenericIdInput
+    parentEntry: GenericIdInput
+    projectId: String
+    projectTimeEntries: [ProjectTimeEntryInput]
+    reportNumber: String
+    submission: Boolean
+    weekCommencing: CostingDateTime
+}
+# ON HOLD: NOT USED
+input ActivityMaterialInput {
+    description: String
+    id: String
+    installedQuantity: String
+    scheduledQuantity: String
+    uom: String
+}
+input TimesheetApprovalInput {
+    approvedBy: String
+    approvedDate: CostingDateTime
+    comments: String
+    rejectedBy: String
+    rejectedDate: CostingDateTime
+}
+input ActivityTimesheetInput {
+    internalId: String
+    projectId: String
+    scheduleFileTypeId: String
+}
+input BreakInput {
+    duration: Float
+    startTime: String
+}
+input IndividualTimesheetActivityInput {
+    activity: GenericIdInput
+    dateForEntry: CostingDateTime
+    durationTime: Float
+}
+input IndivitualTimesheetPlantActivityInput {
+    activity: ActivityTimesheetInput
+    area: GenericIdInput
+    dateForEntry: CostingDateTime
+    durationTime: Float
+}
+input IndividualTimesheetPlantInput {
+    activities: [IndivitualTimesheetPlantActivityInput]
+    company: GenericIdInput
+    dateForEntry: CostingDateTime
+    durationTime: Float
+    loads: [LoadInput]
+    notes: String
+    plant: GenericIdInput
+    quantity: Float
+    unitNumber: String
+}
+input WorkCrewTimesheetLaborInput {
+    company: GenericIdInput
+    crewMember: GenericIdInput
+    endTime: String
+    lunchTime: Boolean
+    notes: String
+    startTime: String
+    totalCrewMemberHours: Float
+}
+input WorkCrewTimesheetPlantInput {
+    endSmu: Float
+    notes: String
+    operator: String
+    plant: GenericIdInput
+    quantity: Float
+    startSmu: Float
+    subContractor: String
+}
+input ProjectTimeEntryInput {
+    days: [DayInput]
+    notes: String
+    subproject: GenericIdInput
+    timeType: GenericIdInput
+}
+input DayInput {
+    hours: Float
+}
+input LoadInput {
+    count: Int
+    fromArea: GenericIdInput
+    material: GenericIdInput
+    toArea: GenericIdInput
+}
+# // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 22) SHIFTS
+input ShiftInformationInput {
+    endTime: String
+    responsibleEngineer: GenericIdInput
+    shiftDate: CostingDateTime
+    shiftType: GenericIdInput
+    startTime: String
+}
+input ShiftInput {
+    description: String
+    endTime: String
+    projectId: String
+    id: String
+    inTimeSheet: Boolean!
+    name: String!
+    startTime: String
+    timecode: TcodeInput!
+}
+input TcodeInput {
+    id: String!
+}
+# // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 24) TIMECODES
+input TimecodeInput {
+    active: Boolean
+    code: String!
+    description: String
+    id: String
+    isDeleted: Boolean
+    isEdited: Boolean
+    isProductive: Boolean
+    multiplier: Float
+    projectId: String
+}
+# // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 26) EMAILS
+input TimesheetSubmitEmailDataInput {
+    approvalForm: Boolean
+    emailContent: String!
+    formType: Int!
+    id: String
+    projectId: String!
+}
+input TimesheetEmailInput {
+    accessToken: String
+    content: String!
+    notifyProjectAdmin: Boolean!
+    projectId: String!
+    recipients: [String]!
+    subject: String!
+}
+# // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 27) MEETING TYPES
+input MeetingTypeInput {
+    id: String
+    projectId: String
+    type_EN: String
+    type_DE: String
+    type_ES: String
+    sortSeq: Int
+    active: Boolean!
+    canBeDeleted: Boolean
+}
+# // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 28) INSPECTION TYPES
+input InspectionTypeInput {
+    id: String
+    name: String
+    description: String
+    active: Boolean
+    projectId: String
+}
+# // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 29) MUSTER REPORT
+input MusterReportInput {
+    id: String
+    docket: String
+    attendees: [String!]!
+    notes: String
+    files: [CostingFileInput]
+    guests: [GuestInput]
+}
+input GuestInput {
+    name: String
+    company: String
+}
+input CostingFileInput {
+    id: String
+    docket: String
+    file: GenericFileInput
+    description: String
+    thumbnail: String
+    section: String
+    activity: ActivityDiaryInput
+}
+input GenericFileInput {
+    guid: String
+    projectId: String
+}
+input ActivityDiaryInput {
+    internalId: String
+    projectId: String
+    scheduleFileTypeId: String
+}
+input CostingNonScheduledActivityInput {
+    id: String
+    projectId: String
+}
+input CrudOptionsInput {
+    softDelete: Boolean
+    updateAuditFields: Boolean
+    updateChangeLog: Boolean
+    skipDeletedEntries: Boolean
+    skipInactiveEntries: Boolean
+    skip: Int
+    limit: Int
+    page: Int
+    dateFilter: DateFilterOptions
+    additional_filter: String
+}
+input DateFilterOptions {
+    name: String
+    requestDate: CostingDateTime
+    minDate: CostingDateTime
+    maxDate: CostingDateTime
+}
